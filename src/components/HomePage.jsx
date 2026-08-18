@@ -6,7 +6,7 @@ export default function HomePage() {
     <>
       <div className="header">
         <div className="left-section">
-          <a href="index.html" className="header-link">
+          <a href="/" className="header-link">
             <img className="logo" src="src/assets/images/logo-white.png" />
             <img
               className="mobile-logo"
@@ -31,7 +31,7 @@ export default function HomePage() {
             <span className="orders-text">Orders</span>
           </a>
 
-          <a className="cart-link header-link" href="checkout.html">
+          <a className="cart-link header-link" href="checkout">
             <img
               className="cart-icon"
               src="src/assets/images/icons/cart-icon.png"
