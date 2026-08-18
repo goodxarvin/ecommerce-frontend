@@ -2,6 +2,8 @@
 
 import HomePage from "./components/HomePage";
 import ChechoutPage from "./components/CheckoutPage";
+import OrdersPage from "./components/OrdersPage";
+import TrackingPage from "./components/TrackingPage";
 import { Routes, Route } from "react-router";
 import "./App.css";
 
@@ -13,6 +15,8 @@ function App() {
       <Routes>
         <Route index element={<HomePage />} />
         <Route path="checkout" element={<ChechoutPage />} />
+        <Route path="orders" element={<OrdersPage />}></Route>
+        <Route path="tracking" element={<TrackingPage />} />
       </Routes>
     </>
   );
