@@ -147,3 +147,9 @@
   width: 26px;
   text-align: center;
 }
+
+.active {
+  span {
+    text-decoration: underline;
+  }
+}

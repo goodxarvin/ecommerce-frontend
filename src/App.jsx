@@ -2,6 +2,7 @@
 
 import Header from "./components/Header/Header";
 import CheckoutHeader from "./components/CheckoutHeader/CheckoutHeader";
+import NotFoundPage from "./components/NotFoundPage";
 import HomePage from "./components/HomePage/HomePage";
 import ChechoutPage from "./components/CheckoutPage/CheckoutPage";
 import OrdersPage from "./components/OrdersPage/OrdersPage";
@@ -44,6 +45,14 @@ function App() {
           element={
             <>
               <Header /> <TrackingPage />
+            </>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <>
+              <Header /> <NotFoundPage />
             </>
           }
         />
