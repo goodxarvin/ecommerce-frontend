@@ -1,6 +1,7 @@
 // import { useState } from "react";
 
 import HomePage from "./components/HomePage";
+import ChechoutPage from "./components/CheckoutPage";
 import { Routes, Route } from "react-router";
 import "./App.css";
 
@@ -11,7 +12,7 @@ function App() {
     <>
       <Routes>
         <Route index element={<HomePage />} />
-        <Route path="checkout" element={<HomePage />} />
+        <Route path="checkout" element={<ChechoutPage />} />
       </Routes>
     </>
   );
