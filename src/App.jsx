@@ -1,10 +1,11 @@
 // import { useState } from "react";
 
-import Header from "./components/Header";
-import HomePage from "./components/HomePage";
-import ChechoutPage from "./components/CheckoutPage";
-import OrdersPage from "./components/OrdersPage";
-import TrackingPage from "./components/TrackingPage";
+import Header from "./components/Header/Header";
+import CheckoutHeader from "./components/CheckoutHeader/CheckoutHeader";
+import HomePage from "./components/HomePage/HomePage";
+import ChechoutPage from "./components/CheckoutPage/CheckoutPage";
+import OrdersPage from "./components/OrdersPage/OrdersPage";
+import TrackingPage from "./components/TrackingPage/TrackingPage";
 import { Routes, Route } from "react-router";
 import "./App.css";
 
@@ -22,7 +23,14 @@ function App() {
             </>
           }
         />
-        <Route path="checkout" element={<ChechoutPage />} />
+        <Route
+          path="checkout"
+          element={
+            <>
+              <CheckoutHeader /> <ChechoutPage />
+            </>
+          }
+        />
         <Route
           path="orders"
           element={
