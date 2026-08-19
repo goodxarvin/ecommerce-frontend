@@ -1,7 +1,22 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
 import "./Header.css";
 
 export default function Header() {
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:3000/api/cart-items").then((response) => {
+      setCart(response.data);
+    });
+  }, []);
+
+  let cartQuantity = 0;
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+
   return (
     <div className="header">
       <div className="left-section">
@@ -35,7 +50,7 @@ export default function Header() {
             className="cart-icon"
             src="src/assets/images/icons/cart-icon.png"
           />
-          <div className="cart-quantity">3</div>
+          <div className="cart-quantity">{cartQuantity}</div>
           <div className="cart-text">Cart</div>
         </NavLink>
       </div>

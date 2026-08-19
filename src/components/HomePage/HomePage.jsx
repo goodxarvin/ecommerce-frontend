@@ -11,15 +11,12 @@ export default function HomePage() {
     });
   }, []);
 
-  // console.log(products);
-
   return (
     <>
       <link rel="icon" href="src/assets/images/home-favicon.png" />
       <div className="home-page">
         <div className="products-grid">
           {products.map((product) => {
-            console.log(product.image);
             return (
               <div key={product.id} className="product-container">
                 <div className="product-image-container">
