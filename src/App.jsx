@@ -1,5 +1,5 @@
-// import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Header from "./components/Header/Header";
 import CheckoutHeader from "./components/CheckoutHeader/CheckoutHeader";
 import NotFoundPage from "./components/NotFoundPage";
@@ -13,6 +13,14 @@ import "./App.css";
 // Route is basically a page with a given path in the url from main path to be shown.
 //shortcut: instead of path="/" you can write "index" as well
 function App() {
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    axios.get("api/cart-items").then((response) => {
+      setCart(response.data);
+    });
+  }, []);
+
   return (
     <>
       <Routes>
@@ -20,7 +28,7 @@ function App() {
           index
           element={
             <>
-              <Header /> <HomePage />
+              <Header cart={cart} setCart={setCart} /> <HomePage />
             </>
           }
         />
@@ -36,7 +44,7 @@ function App() {
           path="orders"
           element={
             <>
-              <Header /> <OrdersPage />
+              <Header cart={cart} setCart={setCart} /> <OrdersPage />
             </>
           }
         ></Route>
@@ -44,7 +52,7 @@ function App() {
           path="tracking"
           element={
             <>
-              <Header /> <TrackingPage />
+              <Header cart={cart} setCart={setCart} /> <TrackingPage />
             </>
           }
         />
@@ -52,7 +60,7 @@ function App() {
           path="*"
           element={
             <>
-              <Header /> <NotFoundPage />
+              <Header cart={cart} setCart={setCart} /> <NotFoundPage />
             </>
           }
         />

@@ -1,17 +1,9 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+// import axios from "axios";
+// import { useEffect } from "react";
 import { NavLink } from "react-router";
 import "./Header.css";
 
-export default function Header() {
-  const [cart, setCart] = useState([]);
-
-  useEffect(() => {
-    axios.get("http://localhost:3000/api/cart-items").then((response) => {
-      setCart(response.data);
-    });
-  }, []);
-
+export default function Header({ cart, setCart }) {
   let cartQuantity = 0;
   cart.forEach((cartItem) => {
     cartQuantity += cartItem.quantity;
