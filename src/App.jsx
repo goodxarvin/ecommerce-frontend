@@ -16,7 +16,7 @@ function App() {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    axios.get("api/cart-items").then((response) => {
+    axios.get("/api/cart-items?expand=product").then((response) => {
       setCart(response.data);
     });
   }, []);
@@ -36,7 +36,7 @@ function App() {
           path="checkout"
           element={
             <>
-              <CheckoutHeader /> <ChechoutPage />
+              <CheckoutHeader /> <ChechoutPage cart={cart} setCart={setCart} />
             </>
           }
         />

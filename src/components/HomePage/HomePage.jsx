@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import getStandardPrice from "../../utils/money";
 import "./HomePage.css";
 
 export default function HomePage() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get("api/products").then((response) => {
+    axios.get("/api/products").then((response) => {
       setProducts(response.data);
     });
   }, []);
@@ -38,7 +39,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="product-price">
-                  ${(product.priceCents / 100).toFixed(2)}
+                  {getStandardPrice(product.priceCents)}
                 </div>
 
                 <div className="product-quantity-container">
