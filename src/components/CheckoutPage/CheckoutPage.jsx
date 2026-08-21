@@ -10,15 +10,20 @@ export default function ChechoutPage({ cart, setCart }) {
   const [paymentSummary, setPaymentSummary] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("/api/delivery-options?expand=estimatedDeliveryTime")
-      .then((response) => {
-        setDeliveryOptions(response.data);
-      });
+    const getDelivaryOptionsData = async () => {
+      const response = await axios.get(
+        "/api/delivery-options?expand=estimatedDeliveryTime",
+      );
+      setDeliveryOptions(response.data);
+    };
 
-    axios.get("/api/payment-summary").then((response) => {
+    const getPaymentSummaryData = async () => {
+      const response = await axios.get("/api/payment-summary");
       setPaymentSummary(response.data);
-    });
+    };
+
+    getDelivaryOptionsData();
+    getPaymentSummaryData();
   }, []);
 
   return (
