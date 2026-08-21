@@ -1,18 +1,13 @@
 import axios from "axios";
-import dayjs from "dayjs";
 import { useState, useEffect } from "react";
+import OrderSummary from "./OrderSummary";
+import PaymentSummary from "./PaymentSummary";
 import { Link } from "react-router";
-import getStandardPrice from "../../utils/money";
 import "./CheckoutPage.css";
 
 export default function ChechoutPage({ cart, setCart }) {
   const [deliveryOptions, setDeliveryOptions] = useState([]);
   const [paymentSummary, setPaymentSummary] = useState(null);
-
-  let totalQuantity = 0;
-  cart.forEach((cartItem) => {
-    totalQuantity += cartItem.quantity;
-  });
 
   useEffect(() => {
     axios
@@ -34,140 +29,13 @@ export default function ChechoutPage({ cart, setCart }) {
         <div className="page-title">Review your order</div>
 
         <div className="checkout-grid">
-          <div className="order-summary">
-            {paymentSummary &&
-              deliveryOptions.length > 0 &&
-              cart.map((cartItem) => {
-                const selectedDeliveryOption = deliveryOptions.find(
-                  (deliveryOption) => {
-                    return cartItem.deliveryOptionId === deliveryOption.id;
-                  },
-                );
+          <OrderSummary
+            paymentSummary={paymentSummary}
+            deliveryOptions={deliveryOptions}
+            cart={cart}
+          />
 
-                return (
-                  <div key={cartItem.productId} className="cart-item-container">
-                    <div className="delivery-date">
-                      Delivery date:{" "}
-                      {dayjs(
-                        selectedDeliveryOption.estimatedDeliveryTimeMs,
-                      ).format("dddd, MMMM D")}
-                    </div>
-
-                    <div className="cart-item-details-grid">
-                      <img
-                        className="product-image"
-                        src={cartItem.product.image}
-                      />
-
-                      <div className="cart-item-details">
-                        <div className="product-name">
-                          {cartItem.product.name}
-                        </div>
-                        <div className="product-price">
-                          {getStandardPrice(cartItem.product.priceCents)}
-                        </div>
-                        <div className="product-quantity">
-                          <span>
-                            Quantity:{" "}
-                            <span className="quantity-label">
-                              {cartItem.quantity}
-                            </span>
-                          </span>
-                          <span className="update-quantity-link link-primary">
-                            Update
-                          </span>
-                          <span className="delete-quantity-link link-primary">
-                            Delete
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="delivery-options">
-                        <div className="delivery-options-title">
-                          Choose a delivery option:
-                        </div>
-                        {deliveryOptions.map((deliveryOption) => {
-                          return (
-                            <div
-                              key={deliveryOption.id}
-                              className="delivery-option"
-                            >
-                              <input
-                                type="radio"
-                                checked={
-                                  deliveryOption.id ===
-                                  cartItem.deliveryOptionId
-                                }
-                                className="delivery-option-input"
-                                name={`delivery-option-${cartItem.productId}`}
-                              />
-                              <div>
-                                <div className="delivery-option-date">
-                                  {dayjs(
-                                    deliveryOption.estimatedDeliveryTimeMs,
-                                  ).format("dddd, MMMM D")}
-                                </div>
-                                <div className="delivery-option-price">
-                                  {deliveryOption.priceCents
-                                    ? `${getStandardPrice(deliveryOption.priceCents)} - Shipping`
-                                    : "FREE Shipping"}
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-
-          {paymentSummary && (
-            <div className="payment-summary">
-              <div className="payment-summary-title">Payment Summary</div>
-
-              <div className="payment-summary-row">
-                <div>Items ({totalQuantity}):</div>
-                <div className="payment-summary-money">
-                  {getStandardPrice(paymentSummary.productCostCents)}
-                </div>
-              </div>
-
-              <div className="payment-summary-row">
-                <div>Shipping &amp; handling:</div>
-                <div className="payment-summary-money">
-                  {" "}
-                  {getStandardPrice(paymentSummary.shippingCostCents)}
-                </div>
-              </div>
-
-              <div className="payment-summary-row subtotal-row">
-                <div>Total before tax:</div>
-                <div className="payment-summary-money">
-                  {getStandardPrice(paymentSummary.totalCostBeforeTaxCents)}
-                </div>
-              </div>
-
-              <div className="payment-summary-row">
-                <div>Estimated tax (10%):</div>
-                <div className="payment-summary-money">
-                  {getStandardPrice(paymentSummary.taxCents)}
-                </div>
-              </div>
-
-              <div className="payment-summary-row total-row">
-                <div>Order total:</div>
-                <div className="payment-summary-money">
-                  {getStandardPrice(paymentSummary.totalCostCents)}
-                </div>
-              </div>
-
-              <button className="place-order-button button-primary">
-                Place your order
-              </button>
-            </div>
-          )}
+          <PaymentSummary paymentSummary={paymentSummary} cart={cart} />
         </div>
       </div>
     </>
