@@ -43,7 +43,11 @@ export default function ChechoutPage({ cart, setCart, getCartItemsData }) {
             cart={cart}
           />
 
-          <PaymentSummary paymentSummary={paymentSummary} cart={cart} />
+          <PaymentSummary
+            paymentSummary={paymentSummary}
+            getCartItemsData={getCartItemsData}
+            cart={cart}
+          />
         </div>
       </div>
     </>

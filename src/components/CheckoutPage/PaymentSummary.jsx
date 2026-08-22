@@ -1,10 +1,21 @@
+import axios from "axios";
+import { useNavigate } from "react-router";
 import getStandardPrice from "../../utils/money";
+import getTotalQuantity from "../../utils/quantityCounter";
 
-export default function PaymentSummary({ paymentSummary, cart }) {
-  let totalQuantity = 0;
-  cart.forEach((cartItem) => {
-    totalQuantity += cartItem.quantity;
-  });
+export default function PaymentSummary({
+  paymentSummary,
+  getCartItemsData,
+  cart,
+}) {
+  const totalQuantity = getTotalQuantity(cart);
+  const navigateToOrders = useNavigate();
+
+  const createOrder = async (event) => {
+    await axios.post(`api/orders`);
+    await getCartItemsData();
+    navigateToOrders("/orders"); // navigate to /orders/ url
+  };
   return (
     <>
       {paymentSummary && (
@@ -47,9 +58,14 @@ export default function PaymentSummary({ paymentSummary, cart }) {
             </div>
           </div>
 
-          <button className="place-order-button button-primary">
-            Place your order
-          </button>
+          {cart.length !== 0 && (
+            <button
+              className="place-order-button button-primary"
+              onClick={createOrder}
+            >
+              Place your order
+            </button>
+          )}
         </div>
       )}
     </>
