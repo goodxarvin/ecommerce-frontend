@@ -15,11 +15,11 @@ import "./App.css";
 function App() {
   const [cart, setCart] = useState([]);
 
+  const getCartItemsData = async () => {
+    const response = await axios.get("/api/cart-items?expand=product");
+    setCart(response.data);
+  };
   useEffect(() => {
-    const getCartItemsData = async () => {
-      const response = await axios.get("/api/cart-items?expand=product");
-      setCart(response.data);
-    };
     getCartItemsData();
   }, []);
 
@@ -30,7 +30,8 @@ function App() {
           index
           element={
             <>
-              <Header cart={cart} setCart={setCart} /> <HomePage />
+              <Header cart={cart} setCart={setCart} />{" "}
+              <HomePage getCartItemsData={getCartItemsData} />
             </>
           }
         />
