@@ -1,7 +1,9 @@
 import { Link } from "react-router";
+import getTotalQuantity from "../../utils/quantityCounter";
 import "./CheckoutHeader.css";
 
-export default function CheckoutHeader() {
+export default function CheckoutHeader({ cart }) {
+  const totalQuantity = getTotalQuantity(cart);
   return (
     <>
       {/* <title>checkout</title> */}
@@ -20,7 +22,7 @@ export default function CheckoutHeader() {
           <div className="checkout-header-middle-section">
             Checkout (
             <Link className="return-to-home-link" to="/">
-              3 items
+              {totalQuantity} items
             </Link>
             )
           </div>

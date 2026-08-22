@@ -1,14 +1,11 @@
 // import axios from "axios";
 // import { useEffect } from "react";
 import { NavLink } from "react-router";
+import getTotalQuantity from "../../utils/quantityCounter";
 import "./Header.css";
 
 export default function Header({ cart, setCart }) {
-  let cartQuantity = 0;
-  cart.forEach((cartItem) => {
-    cartQuantity += cartItem.quantity;
-  });
-
+  const totalQuantity = getTotalQuantity(cart);
   return (
     <div className="header">
       <div className="left-section">
@@ -42,7 +39,7 @@ export default function Header({ cart, setCart }) {
             className="cart-icon"
             src="src/assets/images/icons/cart-icon.png"
           />
-          <div className="cart-quantity">{cartQuantity}</div>
+          <div className="cart-quantity">{totalQuantity}</div>
           <div className="cart-text">Cart</div>
         </NavLink>
       </div>

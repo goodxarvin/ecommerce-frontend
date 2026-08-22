@@ -39,7 +39,7 @@ function App() {
           path="checkout"
           element={
             <>
-              <CheckoutHeader />{" "}
+              <CheckoutHeader cart={cart} />{" "}
               <ChechoutPage
                 cart={cart}
                 setCart={setCart}
