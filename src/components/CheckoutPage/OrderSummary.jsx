@@ -5,6 +5,7 @@ import DeliveryOptions from "./DeliveryOptions";
 export default function OrderSummary({
   paymentSummary,
   deliveryOptions,
+  getCartItemsData,
   cart,
 }) {
   return (
@@ -52,6 +53,7 @@ export default function OrderSummary({
                 </div>
                 <DeliveryOptions
                   deliveryOptions={deliveryOptions}
+                  getCartItemsData={getCartItemsData}
                   cartItem={cartItem}
                 />
               </div>

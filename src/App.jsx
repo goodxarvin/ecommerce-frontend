@@ -39,7 +39,12 @@ function App() {
           path="checkout"
           element={
             <>
-              <CheckoutHeader /> <ChechoutPage cart={cart} setCart={setCart} />
+              <CheckoutHeader />{" "}
+              <ChechoutPage
+                cart={cart}
+                setCart={setCart}
+                getCartItemsData={getCartItemsData}
+              />
             </>
           }
         />

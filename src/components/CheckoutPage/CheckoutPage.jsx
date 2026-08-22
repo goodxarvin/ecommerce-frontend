@@ -5,7 +5,7 @@ import PaymentSummary from "./PaymentSummary";
 import { Link } from "react-router";
 import "./CheckoutPage.css";
 
-export default function ChechoutPage({ cart, setCart }) {
+export default function ChechoutPage({ cart, setCart, getCartItemsData }) {
   const [deliveryOptions, setDeliveryOptions] = useState([]);
   const [paymentSummary, setPaymentSummary] = useState(null);
 
@@ -17,14 +17,16 @@ export default function ChechoutPage({ cart, setCart }) {
       setDeliveryOptions(response.data);
     };
 
+    getDelivaryOptionsData();
+  }, []);
+
+  useEffect(() => {
     const getPaymentSummaryData = async () => {
       const response = await axios.get("/api/payment-summary");
       setPaymentSummary(response.data);
     };
-
-    getDelivaryOptionsData();
     getPaymentSummaryData();
-  }, []);
+  }, [cart]);
 
   return (
     <>
@@ -37,6 +39,7 @@ export default function ChechoutPage({ cart, setCart }) {
           <OrderSummary
             paymentSummary={paymentSummary}
             deliveryOptions={deliveryOptions}
+            getCartItemsData={getCartItemsData}
             cart={cart}
           />
 
