@@ -1,11 +1,44 @@
-// import axios from "axios";
 // import { useEffect } from "react";
-import { NavLink } from "react-router";
+import axios from "axios";
+import { NavLink, useNavigate } from "react-router";
+import { useState } from "react";
 import getTotalQuantity from "../../utils/quantityCounter";
 import "./Header.css";
 
-export default function Header({ cart, setCart }) {
+export default function Header({ cart, setCart, products, setProducts }) {
   const totalQuantity = getTotalQuantity(cart);
+  const [searchValue, setSearchValue] = useState("");
+  const searchNavigate = useNavigate();
+
+  const setInputValue = (event) => {
+    setSearchValue(String(event.target.value));
+  };
+
+  const startSearch = async () => {
+    // const search = searchParams.get("search");
+    searchNavigate(`/?search=${searchValue}`);
+    if (searchValue) {
+      const searchResponse = await axios.get(
+        `/api/products?search=${searchValue}`,
+      );
+      if (searchResponse.data.length) {
+        setProducts(searchResponse.data);
+      } else {
+        setProducts([]);
+      }
+    } else {
+      searchNavigate("/");
+      const allProducts = await axios.get(`/api/products`);
+      setProducts(allProducts.data);
+    }
+  };
+
+  const startSearchEnter = (event) => {
+    if (event.key === "Enter") {
+      return startSearch();
+    }
+  };
+
   return (
     <div className="header">
       <div className="left-section">
@@ -19,9 +52,16 @@ export default function Header({ cart, setCart }) {
       </div>
 
       <div className="middle-section">
-        <input className="search-bar" type="text" placeholder="Search" />
+        <input
+          className="search-bar"
+          type="text"
+          placeholder="Search"
+          value={searchValue}
+          onChange={setInputValue}
+          onKeyDown={startSearchEnter}
+        />
 
-        <button className="search-button">
+        <button className="search-button" onClick={startSearch}>
           <img
             className="search-icon"
             src="src/assets/images/icons/search-icon.png"

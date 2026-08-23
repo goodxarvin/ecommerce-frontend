@@ -16,6 +16,7 @@ import "./App.css";
 //shortcut: instead of path="/" you can write "index" as well
 function App() {
   const [cart, setCart] = useState([]);
+  const [products, setProducts] = useState([]);
 
   const getCartItemsData = async () => {
     const response = await axios.get("/api/cart-items?expand=product");
@@ -40,8 +41,17 @@ function App() {
           index
           element={
             <>
-              <Header cart={cart} setCart={setCart} />{" "}
-              <HomePage getCartItemsData={getCartItemsData} />
+              <Header
+                cart={cart}
+                setCart={setCart}
+                products={products}
+                setProducts={setProducts}
+              />{" "}
+              <HomePage
+                getCartItemsData={getCartItemsData}
+                products={products}
+                setProducts={setProducts}
+              />
             </>
           }
         />

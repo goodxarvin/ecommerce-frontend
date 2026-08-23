@@ -1,11 +1,9 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 // import getStandardPrice from "../../utils/money";
 import "./HomePage.css";
 import ProductsGrid from "./ProductsGrid";
-export default function HomePage({ getCartItemsData }) {
-  const [products, setProducts] = useState([]);
-
+export default function HomePage({ products, setProducts, getCartItemsData }) {
   useEffect(() => {
     const getHomeData = async () => {
       const response = await axios.get("/api/products");
