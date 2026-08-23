@@ -3,6 +3,7 @@ import axios from "axios";
 import getStandardPrice from "../../utils/money";
 export default function Products({ product }) {
   const [quantity, setQuantity] = useState(1);
+  const [addedToCart, setAddedToCart] = useState(false);
   const quantityChangeHandler = (event) => {
     setQuantity(Number(event.target.value));
   };
@@ -14,6 +15,10 @@ export default function Products({ product }) {
     const cartChannel = new BroadcastChannel("cart_channel");
     await cartChannel.postMessage("CART_UPDATED");
     cartChannel.close();
+    setAddedToCart(true);
+    setTimeout(() => {
+      setAddedToCart(false);
+    }, 2000);
   };
   return (
     <div className="product-container">
@@ -54,7 +59,7 @@ export default function Products({ product }) {
 
       <div className="product-spacer"></div>
 
-      <div className="added-to-cart">
+      <div style={{ opacity: addedToCart ? 1 : 0 }} className="added-to-cart">
         <img src="src/assets/images/icons/checkmark.png" />
         Added
       </div>
