@@ -150,6 +150,27 @@
   cursor: pointer;
 }
 
+/* #quantity-input {
+  width: 30px;
+  margin-right: 5px;
+} */
+
+#add-quantity-button,
+#subtract-quantity-button {
+  width: 20px;
+  margin: 0px 10px;
+  padding: 5px;
+  /* height: 10px; */
+}
+
+#add-quantity-button {
+  font-size: 15px;
+}
+
+#subtract-quantity-button {
+  font-size: 15px;
+}
+
 .checkout-page .delivery-option-date {
   font-weight: 500;
   margin-bottom: 3px;
@@ -206,4 +227,9 @@
 
   margin-top: 20px;
   margin-bottom: 19px;
+}
+
+
+.quantity-label{
+  margin-left: 10px;
 }
