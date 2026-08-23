@@ -1,16 +1,10 @@
 import Products from "./Products";
 
-export default function ProductsGrid({ products, getCartItemsData }) {
+export default function ProductsGrid({ products }) {
   return (
     <div className="products-grid">
       {products.map((product) => {
-        return (
-          <Products
-            key={product.id}
-            product={product}
-            getCartItemsData={getCartItemsData}
-          />
-        );
+        return <Products key={product.id} product={product} />;
       })}
     </div>
   );

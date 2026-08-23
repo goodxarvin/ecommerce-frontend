@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import getStandardPrice from "../../utils/money";
-export default function Products({ product, getCartItemsData }) {
+export default function Products({ product }) {
   const [quantity, setQuantity] = useState(1);
   const quantityChangeHandler = (event) => {
     setQuantity(Number(event.target.value));
@@ -11,7 +11,9 @@ export default function Products({ product, getCartItemsData }) {
       productId: product.id,
       quantity: quantity,
     });
-    await getCartItemsData();
+    const cartChannel = new BroadcastChannel("cart_channel");
+    await cartChannel.postMessage("CART_UPDATED");
+    cartChannel.close();
   };
   return (
     <div className="product-container">

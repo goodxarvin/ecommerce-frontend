@@ -10,6 +10,8 @@ import TrackingPage from "./components/TrackingPage/TrackingPage";
 import { Routes, Route } from "react-router";
 import "./App.css";
 
+// window.axios = axios;
+
 // Route is basically a page with a given path in the url from main path to be shown.
 //shortcut: instead of path="/" you can write "index" as well
 function App() {
@@ -20,6 +22,14 @@ function App() {
     setCart(response.data);
   };
   useEffect(() => {
+    const cartChannel = new BroadcastChannel("cart_channel");
+
+    cartChannel.onmessage = (event) => {
+      if (event.data === "CART_UPDATED") {
+        getCartItemsData();
+      }
+    };
+
     getCartItemsData();
   }, []);
 
@@ -52,7 +62,8 @@ function App() {
           path="orders"
           element={
             <>
-              <Header cart={cart} setCart={setCart} /> <OrdersPage />
+              <Header cart={cart} setCart={setCart} />{" "}
+              <OrdersPage getCartItemsData={getCartItemsData} />
             </>
           }
         ></Route>

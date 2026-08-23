@@ -1,10 +1,10 @@
 import { Fragment } from "react";
 import { Link } from "react-router";
-
 import getStandardPrice from "../../utils/money";
 import dayjs from "dayjs";
+import OrderProducts from "./OrderProducts";
 
-export default function OrdersGrid({ orders }) {
+export default function OrdersGrid({ orders, getCartItemsData }) {
   return (
     <div className="orders-grid">
       {orders.map((order) => {
@@ -29,45 +29,10 @@ export default function OrdersGrid({ orders }) {
             </div>
 
             <div className="order-details-grid">
-              {order.products.map((orderProduct) => {
-                return (
-                  <Fragment key={orderProduct.product.id}>
-                    <div className="product-image-container">
-                      <img src={orderProduct.product.image} />
-                    </div>
-
-                    <div className="product-details">
-                      <div className="product-name"></div>
-                      <div className="product-delivery-date">
-                        Arriving on:{" "}
-                        {dayjs(orderProduct.estimatedDeliveryTimeMs).format(
-                          "MMMM D",
-                        )}
-                      </div>
-                      <div className="product-quantity">
-                        Quantity: {orderProduct.quantity}
-                      </div>
-                      <button className="buy-again-button button-primary">
-                        <img
-                          className="buy-again-icon"
-                          src="src/assets/images/icons/buy-again.png"
-                        />
-                        <span className="buy-again-message">Add to Cart</span>
-                      </button>
-                    </div>
-
-                    <div className="product-actions">
-                      <Link
-                        to={`/tracking/${order.id}/${orderProduct.productId}`}
-                      >
-                        <button className="track-package-button button-secondary">
-                          Track package
-                        </button>
-                      </Link>
-                    </div>
-                  </Fragment>
-                );
-              })}
+              <OrderProducts
+                order={order}
+                getCartItemsData={getCartItemsData}
+              />
             </div>
           </div>
         );
