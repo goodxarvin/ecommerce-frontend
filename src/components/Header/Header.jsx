@@ -35,7 +35,7 @@ export default function Header({ cart, setCart, products, setProducts }) {
 
   const startSearchEnter = (event) => {
     if (event.key === "Enter") {
-      return startSearch();
+      startSearch();
     }
   };
 

@@ -11,7 +11,7 @@ export default function HomePage({ products, setProducts, getCartItemsData }) {
     };
 
     getHomeData();
-  }, []);
+  }, [setProducts]);
 
   return (
     <>
