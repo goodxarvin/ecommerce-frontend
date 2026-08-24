@@ -3,7 +3,7 @@ import { useEffect } from "react";
 // import getStandardPrice from "../../utils/money";
 import "./HomePage.css";
 import ProductsGrid from "./ProductsGrid";
-export default function HomePage({ products, setProducts, getCartItemsData }) {
+export default function HomePage({ products, setProducts }) {
   useEffect(() => {
     const getHomeData = async () => {
       const response = await axios.get("/api/products");
@@ -17,7 +17,7 @@ export default function HomePage({ products, setProducts, getCartItemsData }) {
     <>
       <link rel="icon" href="src/assets/images/home-favicon.png" />
       <div className="home-page">
-        <ProductsGrid products={products} getCartItemsData={getCartItemsData} />
+        <ProductsGrid products={products} />
       </div>
     </>
   );

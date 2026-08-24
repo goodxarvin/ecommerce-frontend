@@ -21,7 +21,7 @@ export default function Products({ product }) {
     }, 2000);
   };
   return (
-    <div className="product-container">
+    <div className="product-container" data-testid="product-container">
       <div className="product-image-container">
         <img
           data-testid="product-image"
