@@ -1,0 +1,13 @@
+import { it, expect, describe } from "vitest";
+import getStandardPrice from "./money";
+
+describe("getStandardPrice function", () => {
+  it("formats cents to dollar like: 1999 to $19.99", () => {
+    expect(getStandardPrice(1999)).toBe("$19.99");
+  });
+
+  it("diplays two decimals", () => {
+    expect(getStandardPrice(1090)).toBe("$10.90");
+    expect(getStandardPrice(100)).toBe("$1.00");
+  });
+});
