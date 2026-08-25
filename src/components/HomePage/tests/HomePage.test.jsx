@@ -13,7 +13,7 @@ function HomePageWrapper() {
   return <HomePage products={products} setProducts={setProducts} />;
 }
 
-describe("HomePage  component", () => {
+describe("HomePage component", () => {
   let user;
   let productIds;
 

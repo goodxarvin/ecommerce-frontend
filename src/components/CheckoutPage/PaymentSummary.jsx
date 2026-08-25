@@ -12,14 +12,14 @@ export default function PaymentSummary({
   const navigateToOrders = useNavigate();
 
   const createOrder = async (event) => {
-    await axios.post(`api/orders`);
+    await axios.post(`/api/orders`);
     await getCartItemsData();
     navigateToOrders("/orders"); // navigate to /orders/ url
   };
   return (
     <>
       {paymentSummary && (
-        <div className="payment-summary">
+        <div className="payment-summary" data-testid="payment-summary">
           <div className="payment-summary-title">Payment Summary</div>
 
           <div className="payment-summary-row">
