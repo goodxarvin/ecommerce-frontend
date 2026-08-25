@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import getStandardPrice from "../../utils/money";
+
 export default function Products({ product }) {
   const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);

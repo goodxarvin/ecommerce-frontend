@@ -1,8 +1,8 @@
 import { vi, it, expect, describe, beforeEach } from "vitest";
 import { useState } from "react";
-// import userEvent from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import axios from "axios";
 import HomePage from "../HomePage";
 
@@ -14,6 +14,9 @@ function HomePageWrapper() {
 }
 
 describe("HomePage  component", () => {
+  let user;
+  let productIds;
+
   beforeEach(() => {
     axios.get.mockImplementation(async (urlPath) => {
       if (urlPath === "/api/products") {
@@ -45,6 +48,12 @@ describe("HomePage  component", () => {
         };
       }
     });
+
+    user = userEvent.setup();
+    productIds = [
+      "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+      "15b6fc6f-327a-4ec4-896f-486349e85a3d",
+    ];
   });
 
   it("diplays the product correctlly", async () => {
@@ -67,5 +76,40 @@ describe("HomePage  component", () => {
     expect(
       within(productContainers[1]).getByText("Intermediate Size Basketball"),
     ).toBeInTheDocument();
+  });
+
+  it("adds items to cart with the correct quantity correcly", async () => {
+    render(
+      <MemoryRouter>
+        <HomePageWrapper />
+      </MemoryRouter>,
+    );
+
+    const productContainers = await screen.findAllByTestId("product-container");
+
+    expect(
+      within(productContainers[0]).getByText("Add to Cart"),
+    ).toBeInTheDocument();
+
+    for (let i = 0; i <= 1; i++) {
+      const addToCartButton = await within(productContainers[i]).findByTestId(
+        "add-to-cart",
+      );
+
+      const quantitySelector = await within(productContainers[i]).findByRole(
+        "combobox",
+      );
+
+      await user.selectOptions(quantitySelector, "9");
+      expect(quantitySelector).toHaveValue("9");
+
+      await user.click(addToCartButton);
+      waitFor(() => {
+        expect(axios.post).toHaveBeenNthCalledWith(i + 1, "/api/cart-items", {
+          productId: productIds[i],
+          quantity: Number(quantitySelector.value),
+        });
+      });
+    }
   });
 });
