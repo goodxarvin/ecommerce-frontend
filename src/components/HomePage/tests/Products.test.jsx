@@ -1,7 +1,7 @@
 import { vi, it, expect, describe, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Products from "./Products";
+import Products from "../Products";
 import axios from "axios";
 
 /* 
@@ -13,6 +13,7 @@ vi.mock("axios");
 
 describe("product component", () => {
   let product;
+  let user;
 
   beforeEach(() => {
     product = {
@@ -26,6 +27,7 @@ describe("product component", () => {
       priceCents: 1090,
       keywords: ["socks", "sports", "apparel"],
     };
+    user = userEvent.setup();
   });
 
   it("diplays the product details correctly", () => {
@@ -52,12 +54,28 @@ describe("product component", () => {
   it("adds a product to the cart", async () => {
     render(<Products product={product} />);
 
-    const user = userEvent.setup();
-    const addToCartButtom = screen.getByTestId("add-to-cart");
-    await user.click(addToCartButtom);
+    const addToCartButton = screen.getByTestId("add-to-cart");
+
+    await user.click(addToCartButton);
     expect(axios.post).toHaveBeenCalledWith("/api/cart-items", {
       productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
       quantity: 1,
+    });
+  });
+
+  it("selects different quantities", async () => {
+    render(<Products product={product} />);
+
+    const addToCartButton = screen.getByTestId("add-to-cart");
+    const quantitySelector = await screen.findByRole("combobox");
+    expect(quantitySelector).toHaveValue("1");
+
+    await user.selectOptions(quantitySelector, "10");
+    expect(quantitySelector).toHaveValue("10");
+    await user.click(addToCartButton);
+    expect(axios.post).toHaveBeenCalledWith("/api/cart-items", {
+      productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+      quantity: 10,
     });
   });
 });

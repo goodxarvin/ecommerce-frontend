@@ -15,4 +15,12 @@ describe("getStandardPrice function", () => {
     expect(getStandardPrice(1090)).toBe("$10.90");
     expect(getStandardPrice(100)).toBe("$1.00");
   });
+
+  it("works for 0 cents", () => {
+    expect(getStandardPrice(0)).toBe("$0.00");
+  });
+
+  it("works for negative numbers", () => {
+    expect(getStandardPrice(-999)).toBe("-$9.99");
+  });
 });

@@ -1,3 +1,7 @@
 export default function getStandardPrice(centPrice) {
-  return `$${(centPrice / 100).toFixed(2)}`;
+  if (centPrice >= 0) {
+    return `$${(centPrice / 100).toFixed(2)}`;
+  } else {
+    return `-$${(-centPrice / 100).toFixed(2)}`;
+  }
 }

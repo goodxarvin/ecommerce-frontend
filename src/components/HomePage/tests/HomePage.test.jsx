@@ -4,7 +4,7 @@ import { useState } from "react";
 import { MemoryRouter } from "react-router";
 import { render, screen, within } from "@testing-library/react";
 import axios from "axios";
-import HomePage from "./HomePage";
+import HomePage from "../HomePage";
 
 vi.mock("axios");
 
